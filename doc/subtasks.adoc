@@ -17,7 +17,7 @@ id - long,
 Список оценок(ratingList) - One to many,
 Широта(latitude)- double,
 Долгота(longitude) - double.
-------------------
+
 Оценка(Rating), поля:
 id - long, 
 Достопримечательность(attraction) Many to one,
