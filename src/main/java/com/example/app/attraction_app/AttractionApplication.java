@@ -1,14 +1,14 @@
-package com.example.app.attractionApp;
+package com.example.app.attraction_app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class AttractionAppApplication {
+public class AttractionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AttractionAppApplication.class, args);
+		SpringApplication.run(AttractionApplication.class, args);
 	}
 
 }
