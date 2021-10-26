@@ -1,4 +1,4 @@
-package com.example.app.attraction_app;
+package com.example.app.attraction;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
