@@ -7,7 +7,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+/**
+ * Сущность Комментария
+ */
 @Entity
 @Setter
 @Getter

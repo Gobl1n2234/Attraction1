@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * Сущность Достопримечательности
+ */
 @Entity
 @Setter
 @Getter
