@@ -14,7 +14,6 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name = "Category")
-@NoArgsConstructor
 public class Category {
 
     @Id

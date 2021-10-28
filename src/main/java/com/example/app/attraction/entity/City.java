@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Сущность Города
@@ -14,7 +15,6 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name = "City")
-@NoArgsConstructor
 public class City {
 
     @Id
@@ -25,5 +25,8 @@ public class City {
     @NotNull
     @Column(name = "name", unique = true)
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "city")
+    private Set<Attraction> listAttraction;
 
 }

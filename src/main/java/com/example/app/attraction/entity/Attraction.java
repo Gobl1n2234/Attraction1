@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Сущность Достопримечательности
@@ -37,4 +38,10 @@ public class Attraction {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "attraction")
+    private Set<Rating> ratings;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "attraction")
+    private Set<Comment> comments;
 }
