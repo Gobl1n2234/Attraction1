@@ -1,11 +1,15 @@
 package com.example.app.attraction.entity;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 /**
@@ -18,15 +22,15 @@ import java.util.Set;
 public class City {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotNull
-    @Column(name = "name", unique = true)
+
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "city")
+    @OneToMany(mappedBy = "city")
     private Set<Attraction> listAttraction;
 
 }

@@ -1,11 +1,17 @@
 package com.example.app.attraction.entity;
 
-import com.sun.istack.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Сущность Комментария
@@ -17,23 +23,33 @@ import java.time.LocalDateTime;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotNull
-    @Column(name = "user_id", unique = true)
+
+    @Column(name = "user_id", unique = true, nullable = false)
     private Long userId;
 
-    @NotNull
-    @Column(name = "date", updatable = false)
+
+    @Column(name = "date", updatable = false, nullable = false)
     private LocalDateTime date;
 
-    @NotNull
-    @Column(name = "rating")
-    private Integer rating;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Attraction attraction;
+    @Column(name = "text", nullable = false)
+    private String text;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.id) && Objects.equals(userId, comment.userId) && Objects.equals(date, comment.date) && Objects.equals(text, comment.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, date, text);
+    }
 }

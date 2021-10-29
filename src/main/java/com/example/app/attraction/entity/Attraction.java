@@ -1,10 +1,16 @@
 package com.example.app.attraction.entity;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 /**
@@ -17,31 +23,31 @@ import java.util.Set;
 public class Attraction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotNull
-    @Column(name = "name", unique = true)
+
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "latitude")
+
+    @Column(name = "latitude", nullable = false)
     private Double latitude;
 
-    @NotNull
-    @Column(name = "longitude")
+
+    @Column(name = "longitude", nullable = false)
     private Double longitude;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private City city;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Category category;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "attraction")
+    @OneToMany(mappedBy = "attraction")
     private Set<Rating> ratings;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "attraction")
+    @OneToMany(mappedBy = "id")
     private Set<Comment> comments;
 }
