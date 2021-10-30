@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -50,4 +51,17 @@ public class Attraction {
 
     @OneToMany(mappedBy = "id")
     private Set<Comment> comments;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Attraction that = (Attraction) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(latitude, that.latitude) && Objects.equals(longitude, that.longitude) && Objects.equals(city, that.city) && Objects.equals(category, that.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, latitude, longitude, city, category);
+    }
 }

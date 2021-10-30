@@ -48,11 +48,11 @@ public class Rating {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rating rating1 = (Rating) o;
-        return Objects.equals(id, rating1.id) && Objects.equals(userId, rating1.userId) && Objects.equals(date, rating1.date) && Objects.equals(rating, rating1.rating) && Objects.equals(attraction, rating1.attraction);
+        return Objects.equals(id, rating1.id) && Objects.equals(userId, rating1.userId) && Objects.equals(date, rating1.date) && Objects.equals(rating, rating1.rating);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, date, rating, attraction);
+        return Objects.hash(id, userId, date, rating);
     }
 }
