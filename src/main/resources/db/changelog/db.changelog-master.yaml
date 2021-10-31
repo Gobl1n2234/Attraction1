@@ -1,0 +1,164 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-lesson2.yaml
+  - changeSet:
+      id: create_table_attraction
+      author: artem
+      changes:
+        - createTable:
+            tableName: attraction
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(30)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: latitude
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: longitude
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_category
+                    #Error(пробовал referenced: сategory(id))
+                    referencedColumnNames: id
+                    referencedTableName: category
+              - column:
+                  name: city_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_city
+                    #Error
+                    referencedColumnNames: id
+                    referencedTableName: city
+  - changeSet:
+      id: create_table_category
+      author: artem
+      changes:
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(30)
+                  constraints:
+                    unique: true
+                    nullable: false
+  - changeSet:
+      id: create_table_city
+      author: artem
+      changes:
+        - createTable:
+            tableName: city
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(30)
+                  constraints:
+                    unique: true
+                    nullable: false
+  - changeSet:
+      id: create_table_rating
+      author: artem
+      changes:
+        - createTable:
+            tableName: rating
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: attraction_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_attraction
+                    #Error
+                    referencedColumnNames: id
+                    referencedTableName: attraction
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rating
+                  type: INT
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_table_comment
+      author: artem
+      changes:
+        - createTable:
+            tableName: comment
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: attraction_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_attraction
+                    #Error
+                    referencedColumnNames: id
+                    referencedTableName: attraction
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: text
+                  type: varchar(2000)
+                  constraints:
+                    nullable: false

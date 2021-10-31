@@ -3,12 +3,8 @@ package com.example.app.attraction.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Сущность Категории
@@ -26,4 +22,7 @@ public class Category {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private Set<Attraction> listAttraction;
 }
