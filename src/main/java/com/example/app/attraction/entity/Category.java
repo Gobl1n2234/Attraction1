@@ -23,6 +23,4 @@ public class Category {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    private Set<Attraction> listAttraction;
 }
