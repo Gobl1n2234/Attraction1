@@ -7,3 +7,8 @@ GO
 alter table city
     add constraint UK_qsstlki7ni5ovaariyy9u8y79 unique (name)
 GO
+alter table attraction
+    add constraint FKhwoch55y40g4w67kgl9ummiee
+        foreign key (city_id)
+            references city (id)
+GO

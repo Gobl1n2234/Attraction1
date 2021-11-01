@@ -30,22 +30,6 @@ databaseChangeLog:
                   type: DOUBLE
                   constraints:
                     nullable: false
-              - column:
-                  name: category_id
-                  type: BIGINT
-                  constraints:
-                    foreignKeyName: fk_category
-                    #Error(пробовал referenced: сategory(id))
-                    referencedColumnNames: id
-                    referencedTableName: category
-              - column:
-                  name: city_id
-                  type: BIGINT
-                  constraints:
-                    foreignKeyName: fk_city
-                    #Error
-                    referencedColumnNames: id
-                    referencedTableName: city
   - changeSet:
       id: create_table_category
       author: artem
@@ -101,14 +85,6 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: attraction_id
-                  type: BIGINT
-                  constraints:
-                    foreignKeyName: fk_attraction
-                    #Error
-                    referencedColumnNames: id
-                    referencedTableName: attraction
-              - column:
                   name: user_id
                   type: BIGINT
                   constraints:
@@ -139,14 +115,6 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: attraction_id
-                  type: BIGINT
-                  constraints:
-                    foreignKeyName: fk_attraction
-                    #Error
-                    referencedColumnNames: id
-                    referencedTableName: attraction
-              - column:
                   name: user_id
                   type: BIGINT
                   constraints:
@@ -162,3 +130,41 @@ databaseChangeLog:
                   type: varchar(2000)
                   constraints:
                     nullable: false
+  - changeSet:
+      id: addColumn_fk_attraction
+      author: artem
+      changes:
+        - addColumn:
+            tableName: attraction
+            columns:
+            - column:
+                name: category_id
+                type: BIGINT
+                constraints:
+                  foreignKeyName: fk_category
+                  referencedColumnNames: id
+                  referencedTableName: category
+                  onDelete: CASCADE
+            - column:
+                name: city_id
+                type: BIGINT
+                constraints:
+                  foreignKeyName: fk_city
+                  referencedColumnNames: id
+                  referencedTableName: city
+                  onDelete: CASCADE
+  - changeSet:
+      id: addColumn_fk_rating
+      author: artem
+      changes:
+        - addColumn:
+            tableName: rating
+            columns:
+              - column:
+                  name: attraction_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_attraction
+                    referencedColumnNames: id
+                    referencedTableName: attraction
+                    onDelete: CASCADE

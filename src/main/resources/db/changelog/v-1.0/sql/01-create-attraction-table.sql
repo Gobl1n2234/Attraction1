@@ -11,13 +11,3 @@ GO
 alter table attraction
     add constraint UK_pkl6ep8pexyl88g9wmle0w4nk unique (name)
 GO
-alter table attraction
-    add constraint FKm5xqx525ip704vr5307yo29ej
-    foreign key (category_id)
-    references category (id)
-GO
-alter table attraction
-    add constraint FKhwoch55y40g4w67kgl9ummiee
-    foreign key (city_id)
-    references city (id)
-GO
