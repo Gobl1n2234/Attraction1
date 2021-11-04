@@ -5,19 +5,27 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet id="6" author="artem">
-        <sqlFile dbms="mysql"
-                 endDelimiter="\nGO"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"
-                 path="sql/40-create-rating-table.sql"/>
-        <rollback>
-            <sqlFile dbms="mysql"
-                     endDelimiter="\nGO"
-                     relativeToChangelogFile="true"
-                     splitStatements="true"
-                     stripComments="true"
-                     path="sql/40-drop-rating-table.sql"/>
-        </rollback>
+        <createTable tableName="Rating">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="attraction_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="attraction_id"
+                                 baseTableName="rating"
+                                 constraintName="fk_rating"
+                                 referencedColumnNames="id"
+                                 referencedTableName="attraction"/>
     </changeSet>
 </databaseChangeLog>
