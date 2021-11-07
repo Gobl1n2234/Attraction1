@@ -1,0 +1,40 @@
+package com.example.app.attraction.service;
+
+import com.example.app.attraction.entity.Attraction;
+
+import java.util.List;
+
+public interface IAttractionService {
+    //Добавление достопремечательности
+    void add(Attraction attraction);
+
+    //Редактирование достопремечаткльности
+    void update(Attraction attraction);
+
+    //Удаление достопремечательности
+    void delete(Attraction attraction);
+
+    //Получить все достоп. в указанном городе
+    List<Attraction> getAllByCity(String name);
+
+    //Найти ближайшие без фильтров
+    List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance);
+
+    //Найти ближайшие с фильтрацие по городу
+    List<Attraction> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city);
+
+    //Найти ближайшие по городу и фильтрацией по категорие
+    List<Attraction> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city, String category);
+
+    //Найти ближайшие по городу и фильтрацией по категорие и рейтингу
+    List<Attraction> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city, String category, String rating);
+
+    //Найти ближайшие с фильтром категории
+    List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, String category);
+
+    //Найти ближайшие с фильтром рейтинг
+    List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance,Integer rating);
+
+    //Найти ближайшие с двумя фильтрами
+    List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance,Integer rating, String category);
+}
