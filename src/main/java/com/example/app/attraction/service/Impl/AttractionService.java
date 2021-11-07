@@ -55,6 +55,7 @@ public class AttractionService implements IAttractionService {
         return attractionRepositoryCustom.findNearByCityFilterByCategory(count, latitude, longitude, distance, city, category);
     }
 
+    //Todo
     @Override
     public List<Attraction> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city, String category, String rating) {
         return null;
@@ -64,12 +65,12 @@ public class AttractionService implements IAttractionService {
     public List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, String category) {
         return attractionRepositoryCustom.findNearFilterByCategory(count, latitude, longitude, distance, category);
     }
-
+    //Todo
     @Override
     public List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, Integer rating) {
         return null;
     }
-
+    //Todo
     @Override
     public List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, Integer rating, String category) {
         return null;
