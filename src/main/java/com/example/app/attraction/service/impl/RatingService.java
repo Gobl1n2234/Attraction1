@@ -1,4 +1,4 @@
-package com.example.app.attraction.service.Impl;
+package com.example.app.attraction.service.impl;
 
 import com.example.app.attraction.entity.Rating;
 import com.example.app.attraction.repository.RatingRepository;

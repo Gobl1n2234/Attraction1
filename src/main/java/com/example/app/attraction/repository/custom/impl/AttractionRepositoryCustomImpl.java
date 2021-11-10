@@ -1,10 +1,8 @@
-package com.example.app.attraction.repository.custom.Impl;
+package com.example.app.attraction.repository.custom.impl;
 
 import com.example.app.attraction.entity.Attraction;
 import com.example.app.attraction.entity.Category;
 import com.example.app.attraction.entity.City;
-import com.example.app.attraction.entity.Rating;
-import com.example.app.attraction.repository.RatingRepository;
 import com.example.app.attraction.repository.custom.AttractionRepositoryCustom;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +25,7 @@ public class AttractionRepositoryCustomImpl implements AttractionRepositoryCusto
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Attraction> cq = cb.createQuery(Attraction.class);
         Root<Attraction> attraction = cq.from(Attraction.class);
+        attraction.fetch("ratings", JoinType.LEFT);
         cq.select(attraction);
         cq.where(cb.between(attraction.get("latitude"), latitude - distance, latitude + distance),
                 cb.between(attraction.get("longitude"), longitude - distance, longitude + distance));

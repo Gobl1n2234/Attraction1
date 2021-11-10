@@ -1,5 +1,6 @@
 package com.example.app.attraction.service;
 
+import com.example.app.attraction.dto.AttractionDTO;
 import com.example.app.attraction.entity.Attraction;
 
 import java.util.List;
@@ -27,14 +28,14 @@ public interface IAttractionService {
     List<Attraction> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city, String category);
 
     //Найти ближайшие по городу и фильтрацией по категорие и рейтингу
-    List<Attraction> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city, String category, String rating);
+    List<AttractionDTO> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city, Integer rating, String category);
 
     //Найти ближайшие с фильтром категории
     List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, String category);
 
     //Найти ближайшие с фильтром рейтинг
-    List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance,Integer rating);
+    List<AttractionDTO> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, Integer rating);
 
     //Найти ближайшие с двумя фильтрами
-    List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance,Integer rating, String category);
+    List<AttractionDTO> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, Integer rating, String category);
 }
