@@ -4,12 +4,7 @@ package com.example.app.attraction.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -39,6 +34,9 @@ public class Comment {
     @Column(name = "text", nullable = false)
     private String text;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Attraction attraction;
+
 
     @Override
     public boolean equals(Object o) {
@@ -51,5 +49,11 @@ public class Comment {
     @Override
     public int hashCode() {
         return Objects.hash(id, userId, date, text);
+    }
+
+    @PrePersist
+    protected void onCreate()
+    {
+        this.date = LocalDateTime.now();
     }
 }

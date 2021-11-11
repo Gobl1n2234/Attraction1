@@ -1,16 +1,12 @@
 package com.example.app.attraction.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -24,12 +20,12 @@ public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
 
     @Column(name = "user_id", unique = true, nullable = false)
     private Long userId;
+
 
 
     @Column(name = "date", updatable = false, nullable = false)
@@ -40,7 +36,7 @@ public class Rating {
     private Integer rating;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Attraction attraction;
 
     @Override
@@ -54,5 +50,11 @@ public class Rating {
     @Override
     public int hashCode() {
         return Objects.hash(id, userId, date, rating);
+    }
+
+    @PrePersist
+    protected void onCreate()
+    {
+        this.date = LocalDateTime.now();
     }
 }

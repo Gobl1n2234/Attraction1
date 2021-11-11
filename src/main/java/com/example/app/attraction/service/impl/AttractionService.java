@@ -36,8 +36,8 @@ public class AttractionService implements IAttractionService {
     }
 
     @Override
-    public void add(Attraction attraction) {
-    attractionRepository.save(attraction);
+    public Attraction add(Attraction attraction) {
+        return attractionRepository.save(attraction);
     }
 
     @Override
@@ -51,6 +51,11 @@ public class AttractionService implements IAttractionService {
     }
 
     @Override
+    public Attraction getByName(String name) {
+       return attractionRepository.findByName(name);
+    }
+
+    @Override
     public List<AttractionDTO> getAllByCity(String name) {
         return ratingAvgToDto(attractionRepositoryCustom.getAllByCity(name));
     }
@@ -60,7 +65,7 @@ public class AttractionService implements IAttractionService {
     }
 
     @Override
-    public List<AttractionDTO> getNearAttraction(RequestOptions ro) {
+    public List<AttractionDTO> getNear(RequestOptions ro) {
         return ratingAvgToDto(attractionRepositoryCustom.findNearest(ro.getCount(), ro.getLatitude(), ro.getLongitude(), ro.getDistance()));
 
     }
@@ -73,15 +78,30 @@ public class AttractionService implements IAttractionService {
     }
 
     @Override
-    public List<AttractionDTO> getNearByCityFilerCityAndCategory(RequestOptions ro) {
+    public List<AttractionDTO> getNearByCityFilterCategory(RequestOptions ro) {
         return ratingAvgToDto(attractionRepositoryCustom.findNearByCityFilterByCategory(ro.getCount(), ro.getLatitude(),
                                                                                         ro.getLongitude(), ro.getDistance(),
                                                                                         ro.getCity(), ro.getCategory()));
     }
 
-    //Todo
     @Override
-    public List<AttractionDTO> getNearByCityFilerCityAndCategoryAndRating(RequestOptions ro) {
+    public List<AttractionDTO> getNearByCityFilterRating(RequestOptions ro) {
+        List<Attraction> attraction = (attractionRepositoryCustom.findNearByCity(ro.getCount(), ro.getLatitude(),
+                                                                                ro.getLongitude(), ro.getDistance(),
+                                                                                 ro.getCity()));
+        List<AttractionDTO> attractionDTOS = new ArrayList<>();
+        for (Attraction at: attraction
+        ) {
+            double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
+            if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
+                attractionDTOS.add(new AttractionDTO(at, ratingAvg));
+        }
+        return attractionDTOS;
+    }
+
+
+    @Override
+    public List<AttractionDTO> getNearByCityFilterCategoryAndRating(RequestOptions ro) {
         List<Attraction> attraction = (attractionRepositoryCustom.findNearByCityFilterByCategory(ro.getCount(), ro.getLatitude(),
                                                                                                 ro.getLongitude(), ro.getDistance(),
                                                                                                 ro.getCity(), ro.getCategory()));
@@ -97,12 +117,12 @@ public class AttractionService implements IAttractionService {
     }
 
     @Override
-    public List<AttractionDTO> getNearAttractionFilterCategory(RequestOptions ro) {
+    public List<AttractionDTO> getNearFilterCategory(RequestOptions ro) {
         return ratingAvgToDto(attractionRepositoryCustom.findNearFilterByCategory(ro.getCount(), ro.getLatitude(), ro.getLongitude(), ro.getDistance(), ro.getCategory()));
     }
-    //Todo
+
     @Override
-    public List<AttractionDTO> getNearAttractionFilterRating(RequestOptions ro) {
+    public List<AttractionDTO> getNearFilterRating(RequestOptions ro) {
         List<Attraction> attraction = attractionRepositoryCustom.findNearest(ro.getCount(), ro.getLatitude(), ro.getLongitude(), ro.getDistance());
         List<AttractionDTO> attractionDTOS = new ArrayList<>();
         for (Attraction at: attraction
@@ -113,9 +133,9 @@ public class AttractionService implements IAttractionService {
         }
         return attractionDTOS;
     }
-    //Todo
+
     @Override
-    public List<AttractionDTO> getNearAttractionFilterRatingAndCategory(RequestOptions ro) {
+    public List<AttractionDTO> getNearFilterRatingAndCategory(RequestOptions ro) {
         List<Attraction> attraction = attractionRepositoryCustom.findNearFilterByCategory(ro.getCount(), ro.getLatitude(),
                                                                                             ro.getLongitude(), ro.getDistance(), ro.getCategory());
         List<AttractionDTO> attractionDTOS = new ArrayList<>();
@@ -127,4 +147,6 @@ public class AttractionService implements IAttractionService {
         }
         return attractionDTOS;
     }
+
+
 }

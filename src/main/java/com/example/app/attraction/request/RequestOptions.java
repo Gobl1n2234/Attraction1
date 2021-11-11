@@ -20,7 +20,4 @@ public class RequestOptions {
         this.distance = distance;
     }
 
-
-    public RequestOptions() {
-    }
 }
