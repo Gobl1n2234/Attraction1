@@ -1,15 +1,10 @@
 package com.example.app.attraction.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -30,7 +25,8 @@ public class City {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "city")
+    @JsonIgnore
+    @OneToMany(mappedBy = "city" )
     private Set<Attraction> listAttraction;
 
     public City(Long id, String name) {

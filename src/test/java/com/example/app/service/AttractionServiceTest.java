@@ -5,16 +5,10 @@ import com.example.app.attraction.entity.Category;
 import com.example.app.attraction.entity.City;
 import com.example.app.attraction.repository.AttractionRepository;
 import com.example.app.attraction.repository.custom.AttractionRepositoryCustom;
-import com.example.app.attraction.service.IAttractionService;
 import com.example.app.attraction.service.impl.AttractionService;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,11 +37,7 @@ public class AttractionServiceTest {
     @Test
     @DisplayName("Test findNeared Success")
     public void testNearAttract(){
-        doReturn(Arrays.asList(attraction1, attraction2)).when(attractionRepository).save(any());
 
-        List<Attraction> attractionList = attractionService.getNearAttraction(2,23.2,32.2,300.1);
-
-        Assertions.assertEquals(2,attractionList.size());
     }
 
     //-276

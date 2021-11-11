@@ -12,6 +12,15 @@ public class AttractionDTO {
         this.name = attraction.getName();
         this.latitude = attraction.getLatitude();
         this.longitude = attraction.getLongitude();
+        this.cityName = attraction.getCity().getName();
+    }
+
+    public AttractionDTO(Attraction attraction) {
+        this.id = attraction.getId();
+        this.name = attraction.getName();
+        this.latitude = attraction.getLatitude();
+        this.longitude = attraction.getLongitude();
+        this.cityName = attraction.getCity().getName();
     }
 
     public AttractionDTO() {
@@ -22,4 +31,5 @@ public class AttractionDTO {
     private Double latitude;
     private Double longitude;
     private Double ratingAvg;
+    private String cityName;
 }
