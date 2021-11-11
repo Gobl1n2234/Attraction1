@@ -1,5 +1,6 @@
 package com.example.app.attraction.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,5 +64,14 @@ public class Attraction {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, latitude, longitude, city, category);
+    }
+
+    public Attraction(Long id, String name, Double latitude, Double longitude, City city, Category category) {
+        this.id = id;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.city = city;
+        this.category = category;
     }
 }
