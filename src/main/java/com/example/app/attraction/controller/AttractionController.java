@@ -21,8 +21,6 @@ public class AttractionController {
     @Autowired
     private AttractionService attractionService;
 
-    @Autowired
-    private CityRepository cityRepository;
 
     //Получить все достопремечательности
     @GetMapping("/getAll")
