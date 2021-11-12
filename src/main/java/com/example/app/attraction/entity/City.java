@@ -29,8 +29,7 @@ public class City {
     @OneToMany(mappedBy = "city" )
     private Set<Attraction> listAttraction;
 
-    public City(Long id, String name) {
-        this.id = id;
+    public City( String name) {
         this.name = name;
     }
 

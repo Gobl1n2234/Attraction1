@@ -1,9 +1,12 @@
 package com.example.app.attraction.controller;
 
 import com.example.app.attraction.dto.AttractionDTO;
-import com.example.app.attraction.entity.Attraction;
+import com.example.app.attraction.dto.RatingDTO;
+import com.example.app.attraction.entity.City;
+import com.example.app.attraction.repository.CityRepository;
 import com.example.app.attraction.request.RequestOptions;
 import com.example.app.attraction.service.impl.AttractionService;
+import liquibase.pro.packaged.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +21,19 @@ public class AttractionController {
     @Autowired
     private AttractionService attractionService;
 
+    @Autowired
+    private CityRepository cityRepository;
+
     //Получить все достопремечательности
     @GetMapping("/getAll")
     public ResponseEntity<List<AttractionDTO>> getAll() {
         return new ResponseEntity<>(attractionService.getAll(), HttpStatus.OK);
+    }
+
+    //Сохранение достопремечательности
+    @PostMapping("/add")
+    public ResponseEntity<AttractionDTO> add(@RequestBody AttractionDTO attractionDTO){
+        return new ResponseEntity<>(new AttractionDTO(attractionService.add(attractionDTO)), HttpStatus.OK);
     }
 
     //Получить все в указанном городу
@@ -74,4 +86,5 @@ public class AttractionController {
     public ResponseEntity<AttractionDTO> getByName(@PathVariable String name){
         return new ResponseEntity<>(new AttractionDTO(attractionService.getByName(name)), HttpStatus.OK);
     }
+
 }

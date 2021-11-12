@@ -8,7 +8,6 @@ import com.example.app.attraction.repository.RatingRepository;
 import com.example.app.attraction.service.IRatingService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IAttractionService {
     //Добавление достопремечательности
-    Attraction add(Attraction attraction);
+    Attraction add( AttractionDTO attractionDTO);
 
     //Редактирование достопремечаткльности
     void update(Attraction attraction);

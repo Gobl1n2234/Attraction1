@@ -1,10 +1,7 @@
 package com.example.app.attraction.controller;
 
-import com.example.app.attraction.dto.AttractionDTO;
 import com.example.app.attraction.dto.CommentDTO;
-import com.example.app.attraction.dto.RatingDTO;
 import com.example.app.attraction.entity.Comment;
-import com.example.app.attraction.entity.Rating;
 import com.example.app.attraction.service.impl.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

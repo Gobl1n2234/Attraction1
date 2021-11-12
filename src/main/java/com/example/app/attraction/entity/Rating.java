@@ -1,12 +1,10 @@
 package com.example.app.attraction.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -56,5 +54,15 @@ public class Rating {
     protected void onCreate()
     {
         this.date = LocalDateTime.now();
+    }
+
+    public Rating(Long id, Long userId, LocalDateTime date, Integer rating) {
+        this.id = id;
+        this.userId = userId;
+        this.date = date;
+        this.rating = rating;
+    }
+
+    public Rating() {
     }
 }

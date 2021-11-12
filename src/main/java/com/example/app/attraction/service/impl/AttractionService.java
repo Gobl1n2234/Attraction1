@@ -2,8 +2,12 @@ package com.example.app.attraction.service.impl;
 
 import com.example.app.attraction.dto.AttractionDTO;
 import com.example.app.attraction.entity.Attraction;
+import com.example.app.attraction.entity.Category;
+import com.example.app.attraction.entity.City;
 import com.example.app.attraction.entity.Rating;
 import com.example.app.attraction.repository.AttractionRepository;
+import com.example.app.attraction.repository.CategoryRepository;
+import com.example.app.attraction.repository.CityRepository;
 import com.example.app.attraction.repository.custom.impl.AttractionRepositoryCustomImpl;
 import com.example.app.attraction.request.RequestOptions;
 import com.example.app.attraction.service.IAttractionService;
@@ -17,12 +21,16 @@ public class AttractionService implements IAttractionService {
 
     private final AttractionRepositoryCustomImpl attractionRepositoryCustom;
     private final AttractionRepository attractionRepository;
+    private final CityRepository cityRepo;
+    private final CategoryRepository categoryRepo;
 
 
-    public AttractionService(AttractionRepositoryCustomImpl attractionRepositoryCustom, AttractionRepository attractionRepository) {
+    public AttractionService(AttractionRepositoryCustomImpl attractionRepositoryCustom, AttractionRepository attractionRepository, CityRepository cityRepo, CategoryRepository categoryRepo) {
         this.attractionRepositoryCustom = attractionRepositoryCustom;
         this.attractionRepository = attractionRepository;
 
+        this.cityRepo = cityRepo;
+        this.categoryRepo = categoryRepo;
     }
 
     private List<AttractionDTO> ratingAvgToDto(List<Attraction> attractionList){
@@ -36,7 +44,17 @@ public class AttractionService implements IAttractionService {
     }
 
     @Override
-    public Attraction add(Attraction attraction) {
+    public Attraction add(AttractionDTO attractionDTO) {
+        City city = cityRepo.findByName(attractionDTO.getCityName());
+        Category category = categoryRepo.findByName(attractionDTO.getCategory());
+
+        Attraction attraction = new Attraction();
+        attraction.setCategory(category);
+        attraction.setCity(city);
+        attraction.setName(attractionDTO.getName());
+        attraction.setLatitude(attractionDTO.getLatitude());
+        attraction.setLongitude(attractionDTO.getLongitude());
+
         return attractionRepository.save(attraction);
     }
 
