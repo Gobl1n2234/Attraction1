@@ -49,6 +49,9 @@ public class AttractionController {
      */
     @GetMapping("/getNear")
     public ResponseEntity<List<AttractionDTO>> getNeared(@RequestBody RequestOptions ro) {
+        RequestOptions requestOptions = new RequestOptions(1, 12.2, 12.1, 100.2);
+        List<AttractionDTO> attractionDTOS = attractionService.getNear(requestOptions);
+        System.out.println(attractionDTOS);
         if(ro.getRating() == null && ro.getCategory() == null) {
             return new ResponseEntity<>(attractionService.getNear(ro), HttpStatus.OK);
         }else if(ro.getRating() == null){

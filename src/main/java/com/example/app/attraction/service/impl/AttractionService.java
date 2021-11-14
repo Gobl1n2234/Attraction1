@@ -160,7 +160,7 @@ public class AttractionService implements IAttractionService {
         for (Attraction at: attraction
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
-            if( ro.getRating().doubleValue() <= ratingAvg && ro.getRating().doubleValue() + 1 < ratingAvg)
+            if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
                 attractionDTOS.add(new AttractionDTO(at, ratingAvg));
         }
         return attractionDTOS;
