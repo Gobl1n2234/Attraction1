@@ -1,8 +1,6 @@
-
 package com.example.app.attraction.service.impl;
 
 import com.example.app.attraction.dto.AttractionDTO;
-import com.example.app.attraction.dto.facade.AttractionFacade;
 import com.example.app.attraction.entity.*;
 import com.example.app.attraction.repository.AttractionRepository;
 import com.example.app.attraction.repository.CategoryRepository;
@@ -10,8 +8,6 @@ import com.example.app.attraction.repository.CityRepository;
 import com.example.app.attraction.repository.RatingRepository;
 import com.example.app.attraction.repository.custom.impl.AttractionRepositoryCustomImpl;
 import com.example.app.attraction.request.RequestOptions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,34 +15,24 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.assertj.core.api.Assertions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
-
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.list;
 import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AttractionServiceTest {
 
     private final Long id1 = 1L;
     private final Long id2 = 2L;
-    private final Long id3 = 3L;
     private final String cosmo = "Космопорт";
     private final String azia = "АзияМол";
-    private final String stroi = "СтройКомплекс";
     private  Set<Rating> ratings = new HashSet<>();
     private final City samara = new City( "Samara");
-    private final City moscow = new City("Moscow");
     private final Category category1 = new Category( "Тц");
-    private final Category category2 = new Category("Дворец");
     private final Attraction attraction2 = new Attraction(id1, cosmo, 45.34, 55.13, samara, category1);
     private final Attraction attraction1 = new Attraction(id2, azia, 45.34, 55.13, samara, category1);
 
@@ -65,9 +51,6 @@ class AttractionServiceTest {
     @Mock
     private RatingRepository ratingRepository;
 
-    @Mock
-    private AttractionFacade attractionFacade;
-
 
     @InjectMocks
     AttractionService attractionService;
@@ -75,12 +58,12 @@ class AttractionServiceTest {
 
     @Test
     void getByName() {
-        Attraction attraction = new Attraction();
-        when(attractionRepository.findByName(cosmo)).thenReturn(attraction);
+
+        when(attractionRepository.findByName(cosmo)).thenReturn(attraction1);
 
         AttractionDTO attraction4 = attractionService.getByName(cosmo);
 
-        assertThat(attraction4.getCityName() ).isEqualTo(attraction.getName());
+        assertThat(attraction4.getName()).isEqualTo(attraction1.getName());
 
         Mockito.verify(attractionRepository, Mockito.times(1)).findByName(cosmo);
     }
