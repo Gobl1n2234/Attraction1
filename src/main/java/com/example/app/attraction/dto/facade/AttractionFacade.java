@@ -2,7 +2,6 @@ package com.example.app.attraction.dto.facade;
 
 import com.example.app.attraction.dto.AttractionDTO;
 import com.example.app.attraction.entity.Attraction;
-import org.springframework.stereotype.Component;
 
 public class AttractionFacade {
 

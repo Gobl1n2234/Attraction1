@@ -1,6 +1,5 @@
 package com.example.app.attraction.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,11 +47,11 @@ public class Attraction {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "attraction")
     private Set<Rating> ratings;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "id")
     private Set<Comment> comments;
 
