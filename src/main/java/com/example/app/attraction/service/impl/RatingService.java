@@ -1,6 +1,7 @@
 package com.example.app.attraction.service.impl;
 
 import com.example.app.attraction.dto.RatingDTO;
+import com.example.app.attraction.dto.facade.RatingFacade;
 import com.example.app.attraction.entity.Attraction;
 import com.example.app.attraction.entity.Rating;
 import com.example.app.attraction.repository.AttractionRepository;
@@ -16,7 +17,7 @@ public class RatingService implements IRatingService {
     private final RatingRepository ratingRepository;
     private final AttractionRepository attractionRepository;
 
-    public RatingService(RatingRepository ratingRepository, AttractionRepository attractionRepository) {
+    public RatingService(RatingRepository ratingRepository, AttractionRepository attractionRepository, RatingFacade ratingFacade) {
         this.ratingRepository = ratingRepository;
         this.attractionRepository = attractionRepository;
 
@@ -39,5 +40,10 @@ public class RatingService implements IRatingService {
     public void delete(Long ratingId) {
         Optional<Rating> rating = ratingRepository.findById(ratingId);
         rating.ifPresent(ratingRepository::delete);
+    }
+
+    @Override
+    public Double ratingAvg(Long id) {
+        return ratingRepository.findAvgRating(id);
     }
 }

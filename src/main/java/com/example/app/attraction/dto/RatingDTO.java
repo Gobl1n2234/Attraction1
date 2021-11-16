@@ -1,20 +1,13 @@
 package com.example.app.attraction.dto;
 
-import com.example.app.attraction.entity.Rating;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
+@Getter
+@AllArgsConstructor
 public class RatingDTO {
-    private Long id;
-    private Long userId;
-    private Integer rating;
+    private final Long id;
+    private final Long userId;
+    private final Integer rating;
 
-    public RatingDTO(Rating rating) {
-        this.id = rating.getId();
-        this.userId = rating.getUserId();
-        this.rating = rating.getRating();
-    }
-
-    public RatingDTO() {
-    }
 }

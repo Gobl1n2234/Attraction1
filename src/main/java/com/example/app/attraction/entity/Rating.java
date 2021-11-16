@@ -2,8 +2,17 @@ package com.example.app.attraction.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -50,7 +59,7 @@ public class Rating {
         return Objects.hash(id, userId, date, rating);
     }
 
-    @PrePersist
+    @CreationTimestamp
     protected void onCreate()
     {
         this.date = LocalDateTime.now();

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IAttractionService {
     //Добавление достопремечательности
-    Attraction add( AttractionDTO attractionDTO);
+    AttractionDTO add( AttractionDTO attractionDTO);
 
     //Редактирование достопремечаткльности
     void update(Attraction attraction);
@@ -16,7 +16,7 @@ public interface IAttractionService {
     //Удаление достопремечательности
     void delete(Attraction attraction);
 
-    Attraction getByName(String name);
+    AttractionDTO getByName(String name);
 
     //Получить все достоп. в указанном городе
     List<AttractionDTO> getAllByCity(String name);

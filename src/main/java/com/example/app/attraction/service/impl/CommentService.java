@@ -1,6 +1,7 @@
 package com.example.app.attraction.service.impl;
 
 import com.example.app.attraction.dto.CommentDTO;
+import com.example.app.attraction.dto.facade.CommentFacade;
 import com.example.app.attraction.entity.Attraction;
 import com.example.app.attraction.entity.Comment;
 import com.example.app.attraction.repository.AttractionRepository;
@@ -17,10 +18,12 @@ public class CommentService implements ICommentService {
 
     private final CommentRepository commentRepository;
     private final AttractionRepository attractionRepository;
+    private final CommentFacade commentFacade;
 
-    public CommentService(CommentRepository commentRepository, AttractionRepository attractionRepository) {
+    public CommentService(CommentRepository commentRepository, AttractionRepository attractionRepository, CommentFacade commentFacade) {
         this.commentRepository = commentRepository;
         this.attractionRepository = attractionRepository;
+        this.commentFacade = commentFacade;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class CommentService implements ICommentService {
         List<Comment> commentsList = commentRepository.findAllByAttraction_Name(name);
         for (Comment comment: commentsList
         ) {
-            commentDTOS.add(new CommentDTO(comment));
+            commentDTOS.add(commentFacade.commentToDto(comment));
         }
         return commentDTOS;
     }

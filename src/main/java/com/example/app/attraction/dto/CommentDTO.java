@@ -1,22 +1,13 @@
 package com.example.app.attraction.dto;
 
-import com.example.app.attraction.entity.Comment;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-
-
-@Data
+@Getter
+@AllArgsConstructor
 public class CommentDTO {
-    private Long id;
-    private Long userId;
-    private String text;
+    private final Long id;
+    private final Long userId;
+    private final String text;
 
-    public CommentDTO(Comment comment) {
-        this.id = comment.getId();
-        this.userId = comment.getUserId();
-        this.text = comment.getText();
-    }
-
-    public CommentDTO() {
-    }
 }

@@ -1,10 +1,16 @@
 package com.example.app.attraction.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -25,7 +31,6 @@ public class City {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "city" )
     private Set<Attraction> listAttraction;
 
@@ -34,5 +39,18 @@ public class City {
     }
 
     public City() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return Objects.equals(id, city.id) && Objects.equals(name, city.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

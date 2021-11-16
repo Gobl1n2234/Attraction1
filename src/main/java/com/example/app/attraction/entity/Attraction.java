@@ -1,10 +1,17 @@
 package com.example.app.attraction.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
 import java.util.Objects;
 import java.util.Set;
 
@@ -40,11 +47,9 @@ public class Attraction {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "attraction")
     private Set<Rating> ratings;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "id")
     private Set<Comment> comments;
 

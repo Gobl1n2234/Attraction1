@@ -1,9 +1,9 @@
 package com.example.app.attraction.controller;
 
 import com.example.app.attraction.dto.CommentDTO;
+import com.example.app.attraction.dto.facade.CommentFacade;
 import com.example.app.attraction.entity.Comment;
 import com.example.app.attraction.service.impl.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +14,21 @@ import java.util.List;
 @RequestMapping("/api/comment")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+
+    private final CommentService commentService;
+    private final CommentFacade commentFacade;
+
+    public CommentController(CommentService commentService, CommentFacade commentFacade) {
+        this.commentService = commentService;
+        this.commentFacade = commentFacade;
+    }
 
     /**
      * 4. Написать отзыв о посещении достопримечательности
      */
     @PostMapping("/{attractName}/add")
     public ResponseEntity<CommentDTO> add(@RequestBody CommentDTO commentDTO, @PathVariable String attractName){
-        return new ResponseEntity<>(new CommentDTO(commentService.add(attractName, commentDTO)), HttpStatus.OK);
+        return new ResponseEntity<>(commentFacade.commentToDto(commentService.add(attractName, commentDTO)), HttpStatus.OK);
     }
 
     //Удалить отзыв

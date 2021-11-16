@@ -11,5 +11,7 @@ public interface IRatingService {
     //Удаление Оценки
     void delete(Long ratingId);
 
+    Double ratingAvg(Long id);
+
 
 }
