@@ -3,7 +3,6 @@ package com.example.app.attraction.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 public class AttractionDTO {
 
@@ -14,5 +13,16 @@ public class AttractionDTO {
     private final Double ratingAvg;
     private final String cityName;
     private final String category;
+
+    public AttractionDTO(Long id, String name, Double latitude, Double longitude, Double ratingAvg, String cityName, String category) {
+        this.id = id;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.ratingAvg = ratingAvg;
+        this.cityName = cityName;
+        this.category = category;
+    }
+
 
 }

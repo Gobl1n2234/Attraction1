@@ -1,14 +1,16 @@
 package com.example.app.attraction.request;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class RequestOptions {
 
-    private final Integer count;
-    private final Double latitude;
-    private final Double longitude;
-    private final Double distance;
+    private Integer count;
+    private Double latitude;
+    private Double longitude;
+    private Double distance;
     private String city;
     private String category;
     private Integer rating;
