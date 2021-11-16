@@ -2,12 +2,13 @@ package com.example.app.attraction.service;
 
 import com.example.app.attraction.dto.AttractionDTO;
 import com.example.app.attraction.entity.Attraction;
+import com.example.app.attraction.request.RequestOptions;
 
 import java.util.List;
 
 public interface IAttractionService {
     //Добавление достопремечательности
-    void add(Attraction attraction);
+    AttractionDTO add( AttractionDTO attractionDTO);
 
     //Редактирование достопремечаткльности
     void update(Attraction attraction);
@@ -15,27 +16,33 @@ public interface IAttractionService {
     //Удаление достопремечательности
     void delete(Attraction attraction);
 
+    AttractionDTO getByName(String name);
+
     //Получить все достоп. в указанном городе
-    List<Attraction> getAllByCity(String name);
+    List<AttractionDTO> getAllByCity(String name);
 
     //Найти ближайшие без фильтров
-    List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance);
+    List<AttractionDTO> getNear(RequestOptions requestOptions);
 
     //Найти ближайшие с фильтрацие по городу
-    List<Attraction> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city);
+    List<AttractionDTO> getNearByCity(RequestOptions requestOptions);
 
     //Найти ближайшие по городу и фильтрацией по категорие
-    List<Attraction> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city, String category);
+    List<AttractionDTO> getNearByCityFilterCategory(RequestOptions requestOptions);
+
+    List<AttractionDTO> getNearByCityFilterRating(RequestOptions requestOptions);
 
     //Найти ближайшие по городу и фильтрацией по категорие и рейтингу
-    List<AttractionDTO> getNearByCity(Integer count, Double latitude, Double longitude, Double distance, String city, Integer rating, String category);
+    List<AttractionDTO> getNearByCityFilterCategoryAndRating(RequestOptions requestOptions);
 
     //Найти ближайшие с фильтром категории
-    List<Attraction> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, String category);
+    List<AttractionDTO> getNearFilterCategory(RequestOptions requestOptions);
 
     //Найти ближайшие с фильтром рейтинг
-    List<AttractionDTO> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, Integer rating);
+    List<AttractionDTO> getNearFilterRating(RequestOptions requestOptions);
 
     //Найти ближайшие с двумя фильтрами
-    List<AttractionDTO> getNearAttraction(Integer count, Double latitude, Double longitude, Double distance, Integer rating, String category);
+    List<AttractionDTO> getNearFilterRatingAndCategory(RequestOptions requestOptions);
+
+
 }

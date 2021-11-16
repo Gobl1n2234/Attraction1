@@ -7,13 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommentFacade {
 
-    public CommentDTO toDTO(Comment comment){
-        CommentDTO commentDTO = new CommentDTO();
-        commentDTO.setId(comment.getId());
-        commentDTO.setDate(comment.getDate());
-        commentDTO.setText(comment.getText());
-        commentDTO.setUserId(comment.getUserId());
-
-        return commentDTO;
+    public CommentDTO commentToDto(Comment comment){
+        return new CommentDTO(comment.getId(), comment.getId(), comment.getText());
     }
 }

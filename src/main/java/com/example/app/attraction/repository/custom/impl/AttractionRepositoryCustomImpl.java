@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class AttractionRepositoryCustomImpl implements AttractionRepositoryCustom {
@@ -20,17 +21,18 @@ public class AttractionRepositoryCustomImpl implements AttractionRepositoryCusto
         this.em = em;
     }
 
+
+
     @Override
     public List<Attraction> findNearest(Integer count, Double latitude, Double longitude, Double distance) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Attraction> cq = cb.createQuery(Attraction.class);
         Root<Attraction> attraction = cq.from(Attraction.class);
         attraction.fetch("ratings", JoinType.LEFT);
-        cq.select(attraction);
-        cq.where(cb.between(attraction.get("latitude"), latitude - distance, latitude + distance),
+        cq.select(attraction).where(cb.between(attraction.get("latitude"), latitude - distance, latitude + distance),
                 cb.between(attraction.get("longitude"), longitude - distance, longitude + distance));
 
-        return em.createQuery(cq).setFirstResult(10).setMaxResults(count).getResultList();
+        return em.createQuery(cq).setMaxResults(Objects.requireNonNullElse(count, 10)).getResultList();
     }
 
     @Override
@@ -44,7 +46,7 @@ public class AttractionRepositoryCustomImpl implements AttractionRepositoryCusto
                 cb.between(attraction.get("longitude"), longitude - distance, longitude + distance),
                 cb.like(joinAttractionToCategory.get("name"), "%" + category + "%"));
 
-        return em.createQuery(cq).setFirstResult(10).setMaxResults(count).getResultList();
+        return em.createQuery(cq).setMaxResults(Objects.requireNonNullElse(count, 10)).getResultList();
     }
 
     @Override
@@ -58,7 +60,7 @@ public class AttractionRepositoryCustomImpl implements AttractionRepositoryCusto
                 cb.between(attraction.get("longitude"), longitude - distance, longitude + distance),
                 cb.like(joinAttractionToCity.get("name"), "%" + city + "%"));
 
-        return em.createQuery(cq).setFirstResult(10).setMaxResults(count).getResultList();
+        return em.createQuery(cq).setMaxResults(Objects.requireNonNullElse(count, 10)).getResultList();
     }
 
     @Override
@@ -74,7 +76,17 @@ public class AttractionRepositoryCustomImpl implements AttractionRepositoryCusto
                 cb.like(joinAttractionToCity.get("name"), "%" + city + "%"),
                 cb.like(joinAttractionToCategory.get("name"), "%" + category + "%"));
 
-        return em.createQuery(cq).setFirstResult(10).setMaxResults(count).getResultList();
+        return em.createQuery(cq).setMaxResults(Objects.requireNonNullElse(count, 10)).getResultList();
+    }
+
+    public List<Attraction> getAllByCity(String city){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Attraction> cq = cb.createQuery(Attraction.class);
+        Root<Attraction> attraction = cq.from(Attraction.class);
+        Join<Attraction, City> joinAttractionToCity = attraction.join("city");
+        cq.select(attraction).where(cb.like(joinAttractionToCity.get("name"), "%" + city + "%"));
+
+        return em.createQuery(cq).getResultList();
     }
 
 }

@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     @Query("select avg(r.rating) from Rating r where r.attraction.id =:id")
-    Integer findAvgRating(@Param("id") Long id);
+    Double findAvgRating(@Param("id") Long id);
 }

@@ -1,17 +1,17 @@
 package com.example.app.attraction.service;
 
+import com.example.app.attraction.dto.RatingDTO;
 import com.example.app.attraction.entity.Rating;
 
 public interface IRatingService {
 
     //Добавление оценки достопремечательности
-    void add(Rating rating);
-
-    //Редактирование оценки
-    void update(Rating rating);
+    Rating add(String attractionName,RatingDTO ratingDTO);
 
     //Удаление Оценки
-    void delete(Rating rating);
+    void delete(Long ratingId);
+
+    Double ratingAvg(Long id);
 
 
 }

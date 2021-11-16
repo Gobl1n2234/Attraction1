@@ -2,6 +2,8 @@ package com.example.app.attraction.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -24,12 +27,12 @@ public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
 
     @Column(name = "user_id", unique = true, nullable = false)
     private Long userId;
+
 
 
     @Column(name = "date", updatable = false, nullable = false)
@@ -40,7 +43,7 @@ public class Rating {
     private Integer rating;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Attraction attraction;
 
     @Override
@@ -54,5 +57,21 @@ public class Rating {
     @Override
     public int hashCode() {
         return Objects.hash(id, userId, date, rating);
+    }
+
+    @CreationTimestamp
+    protected void onCreate()
+    {
+        this.date = LocalDateTime.now();
+    }
+
+    public Rating(Long id, Long userId, LocalDateTime date, Integer rating) {
+        this.id = id;
+        this.userId = userId;
+        this.date = date;
+        this.rating = rating;
+    }
+
+    public Rating() {
     }
 }

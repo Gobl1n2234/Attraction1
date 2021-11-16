@@ -1,13 +1,13 @@
 package com.example.app.attraction.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import java.time.LocalDateTime;
-
-@Data
+@Getter
+@AllArgsConstructor
 public class RatingDTO {
-    private Long id;
-    private Long userId;
-    private LocalDateTime date;
-    private Integer rating;
+    private final Long id;
+    private final Long userId;
+    private final Integer rating;
+
 }

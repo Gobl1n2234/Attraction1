@@ -7,12 +7,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class AttractionFacade {
 
-    public AttractionDTO toDTO(Attraction attraction){
-        AttractionDTO attractionDTO = new AttractionDTO();
-        attractionDTO.setId(attraction.getId());
-        attractionDTO.setName(attraction.getName());
-        attractionDTO.setLatitude(attraction.getLatitude());
-        attractionDTO.setLongitude(attraction.getLongitude());
-        return attractionDTO;
+    public AttractionDTO attractionToDto(Attraction attraction, Double rating){
+       return new AttractionDTO(attraction.getId(), attraction.getName(),
+               attraction.getLatitude(), attraction.getLongitude(), rating,
+               attraction.getCity().getName(), attraction.getCategory().getName());
+
+    }
+
+    public Attraction attractionDtoToAttraction(AttractionDTO attractionDTO){
+        Attraction attraction = new Attraction();
+        attraction.setName(attractionDTO.getName());
+        attraction.setLongitude(attractionDTO.getLongitude());
+        attraction.setLatitude(attractionDTO.getLatitude());
+        return attraction;
     }
 }
