@@ -1,6 +1,7 @@
 package com.example.app.attraction.service.impl;
 
 import com.example.app.attraction.dto.AttractionDTO;
+import com.example.app.attraction.dto.facade.AttractionFacade;
 import com.example.app.attraction.entity.Attraction;
 import com.example.app.attraction.entity.Category;
 import com.example.app.attraction.entity.City;
@@ -8,6 +9,7 @@ import com.example.app.attraction.entity.Rating;
 import com.example.app.attraction.repository.AttractionRepository;
 import com.example.app.attraction.repository.CategoryRepository;
 import com.example.app.attraction.repository.CityRepository;
+import com.example.app.attraction.repository.RatingRepository;
 import com.example.app.attraction.repository.custom.impl.AttractionRepositoryCustomImpl;
 import com.example.app.attraction.request.RequestOptions;
 import com.example.app.attraction.service.IAttractionService;
@@ -23,14 +25,18 @@ public class AttractionService implements IAttractionService {
     private final AttractionRepository attractionRepository;
     private final CityRepository cityRepo;
     private final CategoryRepository categoryRepo;
+    private final AttractionFacade attractionFacade;
+    private final RatingRepository ratingRepository;
 
 
-    public AttractionService(AttractionRepositoryCustomImpl attractionRepositoryCustom, AttractionRepository attractionRepository, CityRepository cityRepo, CategoryRepository categoryRepo) {
+    public AttractionService(AttractionRepositoryCustomImpl attractionRepositoryCustom, AttractionRepository attractionRepository, CityRepository cityRepo, CategoryRepository categoryRepo, AttractionFacade attractionFacade, RatingRepository ratingRepository) {
         this.attractionRepositoryCustom = attractionRepositoryCustom;
         this.attractionRepository = attractionRepository;
 
         this.cityRepo = cityRepo;
         this.categoryRepo = categoryRepo;
+        this.attractionFacade = attractionFacade;
+        this.ratingRepository = ratingRepository;
     }
 
     private List<AttractionDTO> ratingAvgToDto(List<Attraction> attractionList){
@@ -38,13 +44,13 @@ public class AttractionService implements IAttractionService {
         for (Attraction at: attractionList
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
-            attractionDTO.add(new AttractionDTO(at, ratingAvg));
+            attractionDTO.add(attractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTO;
     }
 
     @Override
-    public Attraction add(AttractionDTO attractionDTO) {
+    public AttractionDTO add(AttractionDTO attractionDTO) {
         City city = cityRepo.findByName(attractionDTO.getCityName());
         Category category = categoryRepo.findByName(attractionDTO.getCategory());
 
@@ -55,7 +61,8 @@ public class AttractionService implements IAttractionService {
         attraction.setLatitude(attractionDTO.getLatitude());
         attraction.setLongitude(attractionDTO.getLongitude());
 
-        return attractionRepository.save(attraction);
+        attractionRepository.save(attraction);
+        return attractionDTO;
     }
 
     @Override
@@ -69,8 +76,10 @@ public class AttractionService implements IAttractionService {
     }
 
     @Override
-    public Attraction getByName(String name) {
-       return attractionRepository.findByName(name);
+    public AttractionDTO getByName(String name) {
+        Attraction attraction = attractionRepository.findByName(name);
+        Double ratingAvg = ratingRepository.findAvgRating(attraction.getId());
+        return attractionFacade.attractionToDto(attraction, ratingAvg);
     }
 
     @Override
@@ -112,7 +121,7 @@ public class AttractionService implements IAttractionService {
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
             if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
-                attractionDTOS.add(new AttractionDTO(at, ratingAvg));
+                attractionDTOS.add(attractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTOS;
     }
@@ -128,7 +137,7 @@ public class AttractionService implements IAttractionService {
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
             if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
-                attractionDTOS.add(new AttractionDTO(at, ratingAvg));
+                attractionDTOS.add(attractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTOS;
 
@@ -147,7 +156,7 @@ public class AttractionService implements IAttractionService {
              ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
             if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
-            attractionDTOS.add(new AttractionDTO(at, ratingAvg));
+            attractionDTOS.add(attractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTOS;
     }
@@ -161,7 +170,7 @@ public class AttractionService implements IAttractionService {
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
             if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
-                attractionDTOS.add(new AttractionDTO(at, ratingAvg));
+                attractionDTOS.add(attractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTOS;
     }
