@@ -32,9 +32,9 @@ class AttractionServiceTest {
     private final String azia = "АзияМол";
     private  Set<Rating> ratings = new HashSet<>();
     private final City samara = new City( "Samara");
-    private final Category category1 = new Category( "Тц");
-    private final Attraction attraction2 = new Attraction(id1, cosmo, 45.34, 55.13, samara, category1);
-    private final Attraction attraction1 = new Attraction(id2, azia, 45.34, 55.13, samara, category1);
+    private final Category tradeCenterCategory = new Category( "Тц");
+    private final Attraction CosmoAttraction = new Attraction(id1, cosmo, 45.34, 55.13, samara, tradeCenterCategory);
+    private final Attraction AziaAttraction = new Attraction(id2, azia, 45.34, 55.13, samara, tradeCenterCategory);
 
     @Mock
     private AttractionRepository attractionRepository;
@@ -59,20 +59,20 @@ class AttractionServiceTest {
     @Test
     void getByName() {
 
-        when(attractionRepository.findByName(cosmo)).thenReturn(attraction1);
+        when(attractionRepository.findByName(cosmo)).thenReturn(AziaAttraction);
 
         AttractionDTO attraction4 = attractionService.getByName(cosmo);
 
-        assertThat(attraction4.getName()).isEqualTo(attraction1.getName());
+        assertThat(attraction4.getName()).isEqualTo(AziaAttraction.getName());
 
         Mockito.verify(attractionRepository, Mockito.times(1)).findByName(cosmo);
     }
 
     @Test
     void getAll() {
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        doReturn(Arrays.asList(attraction1, attraction2)).when(attractionRepository).findAll();
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        doReturn(Arrays.asList(AziaAttraction, CosmoAttraction)).when(attractionRepository).findAll();
 
         List<AttractionDTO> attractionDTOS = attractionService.getAll();
 
@@ -86,7 +86,7 @@ class AttractionServiceTest {
 
         assertThat(attractionDTOS.size()).isEqualTo(2);
         assertThat(nameAttrac).containsOnly(cosmo, azia);
-        assertThat(nameCategory).containsOnly(category1.getName());
+        assertThat(nameCategory).containsOnly(tradeCenterCategory.getName());
 
         Mockito.verify(attractionRepository, Mockito.times(1)).findAll();
     }
@@ -94,10 +94,10 @@ class AttractionServiceTest {
     @Test
     void getNear() {
         List<Attraction> attractionList = new ArrayList<>();
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        attractionList.add(attraction1);
-        attractionList.add(attraction2);
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        attractionList.add(AziaAttraction);
+        attractionList.add(CosmoAttraction);
         when(attractionRepositoryCustom.findNearest(2,12.1,12.2,100.1)).thenReturn(attractionList);
         RequestOptions requestOptions = new RequestOptions(2, 12.1, 12.2, 100.1);
         List<AttractionDTO> attractionDTOS = attractionService.getNear(requestOptions);
@@ -116,10 +116,10 @@ class AttractionServiceTest {
     @Test
     void getNearByCity() {
         List<Attraction> attractionList = new ArrayList<>();
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        attractionList.add(attraction1);
-        attractionList.add(attraction2);
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        attractionList.add(AziaAttraction);
+        attractionList.add(CosmoAttraction);
         when(attractionRepositoryCustom.findNearByCity(2,12.1,12.2,100.1,samara.getName())).thenReturn(attractionList);
 
         RequestOptions requestOptions = new RequestOptions(2, 12.1, 12.2, 100.1);
@@ -138,15 +138,15 @@ class AttractionServiceTest {
     @Test
     void getNearByCityFilterCategory() {
         List<Attraction> attractionList = new ArrayList<>();
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        attractionList.add(attraction1);
-        attractionList.add(attraction2);
-        when(attractionRepositoryCustom.findNearByCityFilterByCategory(2,12.1,12.2,100.1,samara.getName(), category1.getName() )).thenReturn(attractionList);
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        attractionList.add(AziaAttraction);
+        attractionList.add(CosmoAttraction);
+        when(attractionRepositoryCustom.findNearByCityFilterByCategory(2,12.1,12.2,100.1,samara.getName(), tradeCenterCategory.getName() )).thenReturn(attractionList);
 
         RequestOptions requestOptions = new RequestOptions(2, 12.1, 12.2, 100.1);
         requestOptions.setCity(samara.getName());
-        requestOptions.setCategory(category1.getName());
+        requestOptions.setCategory(tradeCenterCategory.getName());
         List<AttractionDTO> attractionDTOS = attractionService.getNearByCityFilterCategory(requestOptions);
 
         List<String> nameCity = new ArrayList<>();
@@ -158,9 +158,9 @@ class AttractionServiceTest {
         nameCategory.add(attractionDTOS.get(1).getCategory());
 
         assertThat(nameCity).containsOnly(samara.getName());
-        assertThat(nameCategory).containsExactlyInAnyOrder(category1.getName(), category1.getName());
+        assertThat(nameCategory).containsExactlyInAnyOrder(tradeCenterCategory.getName(), tradeCenterCategory.getName());
 
-        Mockito.verify(attractionRepositoryCustom, Mockito.times(1)).findNearByCityFilterByCategory(2,12.1,12.2,100.1, samara.getName(), category1.getName());
+        Mockito.verify(attractionRepositoryCustom, Mockito.times(1)).findNearByCityFilterByCategory(2,12.1,12.2,100.1, samara.getName(), tradeCenterCategory.getName());
     }
 
     @Test
@@ -175,10 +175,10 @@ class AttractionServiceTest {
         ratings.add(rating);
         ratings.add(rating1);
         ratings.add(rating2);
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        attractionList.add(attraction1);
-        attractionList.add(attraction2);
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        attractionList.add(AziaAttraction);
+        attractionList.add(CosmoAttraction);
         Double ratingAvg = null;
         for (Attraction at: attractionList
         ) {
@@ -220,20 +220,20 @@ class AttractionServiceTest {
         ratings.add(rating);
         ratings.add(rating1);
         ratings.add(rating2);
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        attractionList.add(attraction1);
-        attractionList.add(attraction2);
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        attractionList.add(AziaAttraction);
+        attractionList.add(CosmoAttraction);
         Double ratingAvg = null;
         for (Attraction at: attractionList
         ) {
             ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
         }
-        when(attractionRepositoryCustom.findNearByCityFilterByCategory(2,12.1,12.2,100.1,samara.getName(), category1.getName())).thenReturn(attractionList);
+        when(attractionRepositoryCustom.findNearByCityFilterByCategory(2,12.1,12.2,100.1,samara.getName(), tradeCenterCategory.getName())).thenReturn(attractionList);
 
         RequestOptions requestOptions = new RequestOptions(2, 12.1, 12.2, 100.1);
         requestOptions.setCity(samara.getName());
-        requestOptions.setCategory(category1.getName());
+        requestOptions.setCategory(tradeCenterCategory.getName());
         requestOptions.setRating(2);
         List<AttractionDTO> attractionDTOS = attractionService.getNearByCityFilterCategoryAndRating(requestOptions);
 
@@ -250,35 +250,35 @@ class AttractionServiceTest {
 
         assertThat(nameCity).containsOnly(samara.getName());
 
-        assertThat(nameCategory).containsExactlyInAnyOrder(category1.getName(), category1.getName());
+        assertThat(nameCategory).containsExactlyInAnyOrder(tradeCenterCategory.getName(), tradeCenterCategory.getName());
 
         assertThat(ratingAvgDto).isEqualTo(ratingAvg);
         assertThat(ratingAvgDto1).isEqualTo(ratingAvg);
 
 
-        Mockito.verify(attractionRepositoryCustom, Mockito.times(1)).findNearByCityFilterByCategory(2,12.1,12.2,100.1, samara.getName(),category1.getName());
+        Mockito.verify(attractionRepositoryCustom, Mockito.times(1)).findNearByCityFilterByCategory(2,12.1,12.2,100.1, samara.getName(),tradeCenterCategory.getName());
     }
 
     @Test
     void getNearFilterCategory() {
         List<Attraction> attractionList = new ArrayList<>();
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        attractionList.add(attraction1);
-        attractionList.add(attraction2);
-        when(attractionRepositoryCustom.findNearFilterByCategory(2,12.1,12.2,100.1, category1.getName() )).thenReturn(attractionList);
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        attractionList.add(AziaAttraction);
+        attractionList.add(CosmoAttraction);
+        when(attractionRepositoryCustom.findNearFilterByCategory(2,12.1,12.2,100.1, tradeCenterCategory.getName() )).thenReturn(attractionList);
 
         RequestOptions requestOptions = new RequestOptions(2, 12.1, 12.2, 100.1);
-        requestOptions.setCategory(category1.getName());
+        requestOptions.setCategory(tradeCenterCategory.getName());
         List<AttractionDTO> attractionDTOS = attractionService.getNearFilterCategory(requestOptions);
 
         List<String> nameCategory = new ArrayList<>();
         nameCategory.add(attractionDTOS.get(0).getCategory());
         nameCategory.add(attractionDTOS.get(1).getCategory());
 
-        assertThat(nameCategory).containsExactlyInAnyOrder(category1.getName(), category1.getName());
+        assertThat(nameCategory).containsExactlyInAnyOrder(tradeCenterCategory.getName(), tradeCenterCategory.getName());
 
-        Mockito.verify(attractionRepositoryCustom, Mockito.times(1)).findNearFilterByCategory(2,12.1,12.2,100.1, category1.getName());
+        Mockito.verify(attractionRepositoryCustom, Mockito.times(1)).findNearFilterByCategory(2,12.1,12.2,100.1, tradeCenterCategory.getName());
     }
 
     @Test
@@ -293,10 +293,10 @@ class AttractionServiceTest {
         ratings.add(rating);
         ratings.add(rating1);
         ratings.add(rating2);
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        attractionList.add(attraction1);
-        attractionList.add(attraction2);
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        attractionList.add(AziaAttraction);
+        attractionList.add(CosmoAttraction);
         Double ratingAvg = null;
         for (Attraction at: attractionList
         ) {
@@ -330,19 +330,19 @@ class AttractionServiceTest {
         ratings.add(rating);
         ratings.add(rating1);
         ratings.add(rating2);
-        attraction1.setRatings(ratings);
-        attraction2.setRatings(ratings);
-        attractionList.add(attraction1);
-        attractionList.add(attraction2);
+        AziaAttraction.setRatings(ratings);
+        CosmoAttraction.setRatings(ratings);
+        attractionList.add(AziaAttraction);
+        attractionList.add(CosmoAttraction);
         Double ratingAvg = null;
         for (Attraction at: attractionList
         ) {
             ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
         }
-        when(attractionRepositoryCustom.findNearFilterByCategory(2,12.1,12.2,100.1, category1.getName())).thenReturn(attractionList);
+        when(attractionRepositoryCustom.findNearFilterByCategory(2,12.1,12.2,100.1, tradeCenterCategory.getName())).thenReturn(attractionList);
 
         RequestOptions requestOptions = new RequestOptions(2, 12.1, 12.2, 100.1);
-        requestOptions.setCategory(category1.getName());
+        requestOptions.setCategory(tradeCenterCategory.getName());
         requestOptions.setRating(2);
         List<AttractionDTO> attractionDTOS = attractionService.getNearFilterRatingAndCategory(requestOptions);
 
@@ -353,12 +353,12 @@ class AttractionServiceTest {
         nameCategory.add(attractionDTOS.get(0).getCategory());
         nameCategory.add(attractionDTOS.get(1).getCategory());
 
-        assertThat(nameCategory).containsExactlyInAnyOrder(category1.getName(), category1.getName());
+        assertThat(nameCategory).containsExactlyInAnyOrder(tradeCenterCategory.getName(), tradeCenterCategory.getName());
 
         assertThat(ratingAvgDto).isEqualTo(ratingAvg);
         assertThat(ratingAvgDto1).isEqualTo(ratingAvg);
 
-        Mockito.verify(attractionRepositoryCustom, Mockito.times(1)).findNearFilterByCategory(2,12.1,12.2,100.1,category1.getName());
+        Mockito.verify(attractionRepositoryCustom, Mockito.times(1)).findNearFilterByCategory(2,12.1,12.2,100.1,tradeCenterCategory.getName());
     }
 }
 
