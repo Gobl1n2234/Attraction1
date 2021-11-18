@@ -18,12 +18,10 @@ public class CommentService implements ICommentService {
 
     private final CommentRepository commentRepository;
     private final AttractionRepository attractionRepository;
-    private final CommentFacade commentFacade;
 
-    public CommentService(CommentRepository commentRepository, AttractionRepository attractionRepository, CommentFacade commentFacade) {
+    public CommentService(CommentRepository commentRepository, AttractionRepository attractionRepository) {
         this.commentRepository = commentRepository;
         this.attractionRepository = attractionRepository;
-        this.commentFacade = commentFacade;
     }
 
     @Override
@@ -44,7 +42,7 @@ public class CommentService implements ICommentService {
         List<Comment> commentsList = commentRepository.findAllByAttraction_Name(name);
         for (Comment comment: commentsList
         ) {
-            commentDTOS.add(commentFacade.commentToDto(comment));
+            commentDTOS.add(CommentFacade.commentToDto(comment));
         }
         return commentDTOS;
     }

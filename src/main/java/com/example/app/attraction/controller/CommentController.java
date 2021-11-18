@@ -16,11 +16,9 @@ public class CommentController {
 
 
     private final CommentService commentService;
-    private final CommentFacade commentFacade;
 
-    public CommentController(CommentService commentService, CommentFacade commentFacade) {
+    public CommentController(CommentService commentService) {
         this.commentService = commentService;
-        this.commentFacade = commentFacade;
     }
 
     /**
@@ -28,7 +26,7 @@ public class CommentController {
      */
     @PostMapping("/{attractName}/add")
     public ResponseEntity<CommentDTO> add(@RequestBody CommentDTO commentDTO, @PathVariable String attractName){
-        return new ResponseEntity<>(commentFacade.commentToDto(commentService.add(attractName, commentDTO)), HttpStatus.OK);
+        return new ResponseEntity<>(CommentFacade.commentToDto(commentService.add(attractName, commentDTO)), HttpStatus.OK);
     }
 
     //Удалить отзыв

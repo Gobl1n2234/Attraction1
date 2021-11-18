@@ -25,17 +25,15 @@ public class AttractionService implements IAttractionService {
     private final AttractionRepository attractionRepository;
     private final CityRepository cityRepo;
     private final CategoryRepository categoryRepo;
-    private final AttractionFacade attractionFacade;
     private final RatingRepository ratingRepository;
 
 
-    public AttractionService(AttractionRepositoryCustomImpl attractionRepositoryCustom, AttractionRepository attractionRepository, CityRepository cityRepo, CategoryRepository categoryRepo, AttractionFacade attractionFacade, RatingRepository ratingRepository) {
+    public AttractionService(AttractionRepositoryCustomImpl attractionRepositoryCustom, AttractionRepository attractionRepository, CityRepository cityRepo, CategoryRepository categoryRepo, RatingRepository ratingRepository) {
         this.attractionRepositoryCustom = attractionRepositoryCustom;
         this.attractionRepository = attractionRepository;
 
         this.cityRepo = cityRepo;
         this.categoryRepo = categoryRepo;
-        this.attractionFacade = attractionFacade;
         this.ratingRepository = ratingRepository;
     }
 
@@ -44,7 +42,7 @@ public class AttractionService implements IAttractionService {
         for (Attraction at: attractionList
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
-            attractionDTO.add(attractionFacade.attractionToDto(at, ratingAvg));
+            attractionDTO.add(AttractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTO;
     }
@@ -79,7 +77,7 @@ public class AttractionService implements IAttractionService {
     public AttractionDTO getByName(String name) {
         Attraction attraction = attractionRepository.findByName(name);
         Double ratingAvg = ratingRepository.findAvgRating(attraction.getId());
-        return attractionFacade.attractionToDto(attraction, ratingAvg);
+        return AttractionFacade.attractionToDto(attraction, ratingAvg);
     }
 
     @Override
@@ -121,7 +119,7 @@ public class AttractionService implements IAttractionService {
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
             if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
-                attractionDTOS.add(attractionFacade.attractionToDto(at, ratingAvg));
+                attractionDTOS.add(AttractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTOS;
     }
@@ -137,7 +135,7 @@ public class AttractionService implements IAttractionService {
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
             if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
-                attractionDTOS.add(attractionFacade.attractionToDto(at, ratingAvg));
+                attractionDTOS.add(AttractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTOS;
 
@@ -156,7 +154,7 @@ public class AttractionService implements IAttractionService {
              ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
             if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
-            attractionDTOS.add(attractionFacade.attractionToDto(at, ratingAvg));
+            attractionDTOS.add(AttractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTOS;
     }
@@ -170,7 +168,7 @@ public class AttractionService implements IAttractionService {
         ) {
             double ratingAvg = at.getRatings().stream().mapToDouble(Rating::getRating).average().orElse(0);
             if( ro.getRating().doubleValue() <= ratingAvg || ro.getRating().doubleValue() + 1 < ratingAvg)
-                attractionDTOS.add(attractionFacade.attractionToDto(at, ratingAvg));
+                attractionDTOS.add(AttractionFacade.attractionToDto(at, ratingAvg));
         }
         return attractionDTOS;
     }

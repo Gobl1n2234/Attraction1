@@ -47,8 +47,10 @@ public class Attraction {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
+
     @OneToMany(mappedBy = "attraction")
     private Set<Rating> ratings;
+
 
     @OneToMany(mappedBy = "id")
     private Set<Comment> comments;

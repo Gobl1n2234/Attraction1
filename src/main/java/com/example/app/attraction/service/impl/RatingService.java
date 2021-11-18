@@ -1,7 +1,6 @@
 package com.example.app.attraction.service.impl;
 
 import com.example.app.attraction.dto.RatingDTO;
-import com.example.app.attraction.dto.facade.RatingFacade;
 import com.example.app.attraction.entity.Attraction;
 import com.example.app.attraction.entity.Rating;
 import com.example.app.attraction.repository.AttractionRepository;
@@ -17,10 +16,9 @@ public class RatingService implements IRatingService {
     private final RatingRepository ratingRepository;
     private final AttractionRepository attractionRepository;
 
-    public RatingService(RatingRepository ratingRepository, AttractionRepository attractionRepository, RatingFacade ratingFacade) {
+    public RatingService(RatingRepository ratingRepository, AttractionRepository attractionRepository) {
         this.ratingRepository = ratingRepository;
         this.attractionRepository = attractionRepository;
-
     }
 
     @Override
