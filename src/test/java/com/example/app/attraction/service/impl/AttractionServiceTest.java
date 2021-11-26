@@ -30,7 +30,7 @@ class AttractionServiceTest {
     private final Long id2 = 2L;
     private final String cosmo = "Космопорт";
     private final String azia = "АзияМол";
-    private  Set<Rating> ratings = new HashSet<>();
+    private  final Set<Rating> ratings = new HashSet<>();
     private final City samara = new City( "Samara");
     private final Category tradeCenterCategory = new Category( "Тц");
     private final Attraction CosmoAttraction = new Attraction(id1, cosmo, 45.34, 55.13, samara, tradeCenterCategory);
