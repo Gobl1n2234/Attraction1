@@ -1,6 +1,7 @@
 package com.example.app.attraction.controller;
 
 import com.example.app.attraction.dto.AttractionDTO;
+import com.example.app.attraction.kafka.ProducerKaf;
 import com.example.app.attraction.request.RequestOptions;
 import com.example.app.attraction.service.impl.AttractionService;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,11 @@ import java.util.List;
 public class AttractionController {
 
     private final AttractionService attractionService;
+    private final ProducerKaf producerKaf;
 
-    public AttractionController(AttractionService attractionService) {
+    public AttractionController(AttractionService attractionService, ProducerKaf producerKaf) {
         this.attractionService = attractionService;
+        this.producerKaf = producerKaf;
     }
 
 
