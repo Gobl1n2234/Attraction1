@@ -13,6 +13,9 @@ import com.example.app.attraction.repository.RatingRepository;
 import com.example.app.attraction.repository.custom.impl.AttractionRepositoryCustomImpl;
 import com.example.app.attraction.request.RequestOptions;
 import com.example.app.attraction.service.IAttractionService;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,6 +49,25 @@ public class AttractionService implements IAttractionService {
         }
         return attractionDTO;
     }
+
+    public void syncMethod() throws InterruptedException {
+        System.out.println(Thread.currentThread().getName());
+        asyncMethod();
+        for (int i =0; i < 10; i++){
+            System.out.println("syncMethod" + i);
+        }
+    }
+
+    @Async
+    public void asyncMethod() throws InterruptedException {
+        Thread.sleep(5000);
+        System.out.println(Thread.currentThread().getName());
+        for (int i =0; i < 10; i++){
+            System.out.println("asyncMethod" + i);
+        }
+
+    }
+
 
     @Override
     public AttractionDTO add(AttractionDTO attractionDTO) {

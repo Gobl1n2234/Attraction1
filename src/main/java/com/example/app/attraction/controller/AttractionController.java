@@ -1,7 +1,7 @@
 package com.example.app.attraction.controller;
 
 import com.example.app.attraction.dto.AttractionDTO;
-import com.example.app.attraction.kafka.ProducerKaf;
+import com.example.app.attraction.kafka.Producer;
 import com.example.app.attraction.request.RequestOptions;
 import com.example.app.attraction.service.impl.AttractionService;
 import org.springframework.http.HttpStatus;
@@ -15,11 +15,12 @@ import java.util.List;
 public class AttractionController {
 
     private final AttractionService attractionService;
-    private final ProducerKaf producerKaf;
+    private final Producer producer;
 
-    public AttractionController(AttractionService attractionService, ProducerKaf producerKaf) {
+
+    public AttractionController(AttractionService attractionService, Producer producer) {
         this.attractionService = attractionService;
-        this.producerKaf = producerKaf;
+        this.producer = producer;
     }
 
 
@@ -32,6 +33,7 @@ public class AttractionController {
     //Сохранение достопремечательности
     @PostMapping("/add")
     public ResponseEntity<AttractionDTO> add(@RequestBody AttractionDTO attractionDTO){
+        this.producer.sendMessage("attractionAdd", "123", attractionDTO.getName());
         return new ResponseEntity<>(attractionService.add(attractionDTO), HttpStatus.OK);
     }
 
@@ -87,6 +89,11 @@ public class AttractionController {
     @GetMapping("/{name}/getByName")
     public ResponseEntity<AttractionDTO> getByName(@PathVariable String name){
         return new ResponseEntity<>(attractionService.getByName(name), HttpStatus.OK);
+    }
+
+    @GetMapping("/ggg")
+    public void ggg() throws InterruptedException {
+        attractionService.syncMethod();
     }
 
 }
